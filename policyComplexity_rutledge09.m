@@ -11,6 +11,7 @@ c_group.pdON = myColors.reddishPurple_bright;
 c_group.pd = myColors.reddishPurple;
 
 saveFigLoc = 'C:\Users\bilal\Documents\gitRepositories\undermatching_compression\figures\rutledge09';
+addpath('C:\Users\bilal\Documents\gitRepositories\undermatching_compression\helper')
 % N - # trials
 % C - # options (always 2)
 % pop - population (1 = young controls, 2 = elderly controls, 3 = PD off meds, 4 = PD on meds)

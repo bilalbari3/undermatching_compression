@@ -66,6 +66,7 @@ summ.session_actual = []; % actual session number
 summ.session_reset = []; % only iterate when that session type reached again
 summ.allRT = [];
 summ.nTrials = [];
+summ.false_alarm = {};
 
 % for computing undermatching
 summ.um_soltani = []; % by block
@@ -186,6 +187,9 @@ for state = {'40/10','40/7','40/5'}
                 summ.setsize = [summ.setsize 2]; % only two states
 
                 summ.nTrials = [summ.nTrials length(allC_R)];
+
+                % calculate false alarms
+                summ.false_alarm = [summ.false_alarm {calculate_false_alarm_trials(fs_b.(m).(sess))}];
             end
         end
     end
@@ -337,6 +341,9 @@ for m = all_m
             summ.allRT = [summ.allRT median(fs_b.(m).(sess).pd.rt)];
 
             summ.nTrials = [summ.nTrials length(allC_R)];
+
+            % calculate false alarms
+            summ.false_alarm = [summ.false_alarm {calculate_false_alarm_trials(fs_b.(m).(sess))}];
         end
     end
 end
@@ -346,8 +353,9 @@ summ.cfrac_log2 = log2(summ.cfrac);
 
 data_table = table(summ.session_actual', summ.session_reset', summ.bits', summ.rwd', summ.cond_ent', ...
                    summ.allRT', summ.mouse_name', summ.task_name', summ.um_slope_session', summ.nTrials', ...
+                   summ.false_alarm', ...
     'VariableNames', {'Session_Actual', 'Session_Reset', 'Bits', 'Reward', 'Conditional_Entropy', ...
-                      'RT', 'Mouse', 'Task', 'UM_Slope_Session', 'Trials'});
+                      'RT', 'Mouse', 'Task', 'UM_Slope_Session', 'Trials', 'False_Alarm'});
 um_table = table(summ.um_soltani', summ.um_task_block', summ.cfrac', summ.rfrac', summ.cfrac_log2', summ.rfrac_log2', ...
     'VariableNames', {'UM_Soltani','UM_Task','CFrac','RFrac','CFrac_Log2','RFrac_Log2'});
 save('C:\Users\bilal\Documents\gitRepositories\undermatching_compression\data\matching_data.mat', 'data_table', 'um_table', ...
