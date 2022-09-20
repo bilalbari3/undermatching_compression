@@ -129,6 +129,7 @@ for s = 1:length(data)
     tmp_cfrac = log2(tmp_cfrac);
     tmp_mod = fitlm(tmp_rfrac, tmp_cfrac);
     summ.(groups{pop}).um_slope = [summ.(groups{pop}).um_slope tmp_mod.Coefficients.Estimate(2)];
+
 end
 
 for g = groups
@@ -164,11 +165,11 @@ h_scatter_sp(2) = subplot(222); hold on
 h_scatter_sp(3) = subplot(223); hold on
 h_scatter_sp(4) = subplot(224); hold on
 
-h_coef_polComp = figure('units','normalized','outerposition',[0 0.1 0.45 0.75]);
-h_coef = subplot(221); hold on
-h_polComp_hist = subplot(222); hold on
-h_withinsubj = subplot(223); hold on
-h_RT_hist = subplot(224); hold on
+h_coef_polComp = figure('units','normalized','outerposition',[0 0.1 0.45 0.4]);
+h_coef = subplot(131); hold on
+h_polComp_hist = subplot(132); hold on
+% h_withinsubj = subplot(223); hold on
+h_RT_hist = subplot(133); hold on
 x_pred = [-5 5];
 for g_ind = 1:4
     figure(h_rwdSensitivity)
@@ -202,14 +203,14 @@ xlabel(sprintf('Change in policy complexity\nON minus OFF (bits)'))
 ylabel('Probability')
 set(gca, 'tickdir', 'out', 'ytick', 0:0.1:0.6)
 
-% policy complexity scatter
-subplot(h_withinsubj)
-scatter(summ.pdON.bits - summ.pdOFF.bits, summ.pdON.um_slope - summ.pdOFF.um_slope, 10, 'filled', 'MarkerFaceColor', c_group.pd)
-xlabel(sprintf('Change in policy complexity\nON minus OFF (bits)'))
-ylabel(sprintf('Change in matching\nON minus OFF (arb)'))
-xlim(h_withinsubj, [-0.15 0.15])
-fitlm(summ.pdON.bits - summ.pdOFF.bits, summ.pdON.um_slope - summ.pdOFF.um_slope)
-set([h_scatter_sp h_coef h_withinsubj],'tickdir','out')
+% % policy complexity scatter
+% subplot(h_withinsubj)
+% scatter(summ.pdON.bits - summ.pdOFF.bits, summ.pdON.um_slope - summ.pdOFF.um_slope, 10, 'filled', 'MarkerFaceColor', c_group.pd)
+% xlabel(sprintf('Change in policy complexity\nON minus OFF (bits)'))
+% ylabel(sprintf('Change in matching\nON minus OFF (arb)'))
+% xlim(h_withinsubj, [-0.15 0.15])
+% fitlm(summ.pdON.bits - summ.pdOFF.bits, summ.pdON.um_slope - summ.pdOFF.um_slope)
+% set([h_scatter_sp h_coef h_withinsubj],'tickdir','out')
 
 % stats
 [~,p] = lillietest(summ.pdON.bits - summ.pdOFF.bits)

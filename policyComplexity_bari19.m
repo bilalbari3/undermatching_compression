@@ -60,6 +60,7 @@ summ = struct();
 summ.rwd = [];
 summ.mouse_name = {};
 summ.task_name = {};
+summ.session_name = {};
 summ.bits = [];
 summ.cond_ent = [];
 summ.session_actual = []; % actual session number
@@ -178,6 +179,7 @@ for state = {'40/10','40/7','40/5'}
                 summ.mouse_name = [summ.mouse_name {m}];
                 summ.task_name = [summ.task_name {state}];
                 summ.session_actual = [summ.session_actual sess_ind];
+                summ.session_name = [summ.session_name {sess}];
 
                 sess_reset = sess_reset + 1;
                 summ.session_reset = [summ.session_reset sess_reset];
@@ -334,6 +336,7 @@ for m = all_m
             summ.mouse_name = [summ.mouse_name {m}];
             summ.task_name = [summ.task_name {state}];
             summ.session_actual = [summ.session_actual sess_ind];
+            summ.session_name = [summ.session_name {sess}];
 
             sess_reset = sess_reset + 1;
             summ.session_reset = [summ.session_reset sess_reset];
@@ -351,10 +354,10 @@ summ.rfrac_log2 = log2(summ.rfrac);
 summ.rfrac_log2(isinf(summ.rfrac_log2)) = NaN;
 summ.cfrac_log2 = log2(summ.cfrac);
 
-data_table = table(summ.session_actual', summ.session_reset', summ.bits', summ.rwd', summ.cond_ent', ...
+data_table = table(summ.session_name', summ.session_actual', summ.session_reset', summ.bits', summ.rwd', summ.cond_ent', ...
                    summ.allRT', summ.mouse_name', summ.task_name', summ.um_slope_session', summ.nTrials', ...
                    summ.false_alarm', ...
-    'VariableNames', {'Session_Actual', 'Session_Reset', 'Bits', 'Reward', 'Conditional_Entropy', ...
+    'VariableNames', {'Session_Name', 'Session_Actual', 'Session_Reset', 'Bits', 'Reward', 'Conditional_Entropy', ...
                       'RT', 'Mouse', 'Task', 'UM_Slope_Session', 'Trials', 'False_Alarm'});
 um_table = table(summ.um_soltani', summ.um_task_block', summ.cfrac', summ.rfrac', summ.cfrac_log2', summ.rfrac_log2', ...
     'VariableNames', {'UM_Soltani','UM_Task','CFrac','RFrac','CFrac_Log2','RFrac_Log2'});
